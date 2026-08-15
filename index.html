@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="page_title">Reckon — 各種計算</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <span class="mark" data-i18n="badge_local">local-only</span>
+    <h1 data-i18n="brand_name">各種計算</h1>
+    <span class="brand-sub">Reckon</span>
+  </div>
+  <div class="header-right">
+    <a class="back-link" href="https://daigorou-addon.github.io/daigorou-tools/" data-i18n="back_to_top">← Daigorou-Toolsに戻る</a>
+    <p data-i18n="app_tagline">すべての計算はブラウザ内で完結します。</p>
+    <select id="langSelect" class="lang-select">
+      <option value="ja">日本語</option>
+      <option value="en">English</option>
+      <option value="ko">한국어</option>
+      <option value="zh-CN">简体中文</option>
+      <option value="zh-TW">繁體中文</option>
+      <option value="es">Español</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <nav class="tools">
+    <button data-tool="home" class="active" data-i18n="nav_home">ホーム</button>
+    <div class="nav-label" data-i18n="nav_label_math">計算・数学</div>
+    <button data-tool="calc" data-i18n="nav_calc">電卓</button>
+    <button data-tool="splitbill" data-i18n="nav_splitbill">割り勘計算</button>
+    <button data-tool="percent" data-i18n="nav_percent">パーセント計算</button>
+    <button data-tool="unitconvert" data-i18n="nav_unitconvert">単位変換</button>
+    <button data-tool="baseconvert" data-i18n="nav_baseconvert">進数変換</button>
+    <button data-tool="quadratic" data-i18n="nav_quadratic">二次方程式</button>
+    <div class="nav-label" data-i18n="nav_label_date">日付・時間</div>
+    <button data-tool="age" data-i18n="nav_age">年齢計算</button>
+    <button data-tool="datediff" data-i18n="nav_datediff">日付差分計算</button>
+    <button data-tool="countdown" data-i18n="nav_countdown">カウントダウン</button>
+    <button data-tool="weekday" data-i18n="nav_weekday">曜日計算</button>
+    <button data-tool="timezone" data-i18n="nav_timezone">時差計算</button>
+    <button data-tool="zodiac" data-i18n="nav_zodiac">干支・十二支</button>
+    <div class="nav-label" data-i18n="nav_label_health">健康</div>
+    <button data-tool="bmi" data-i18n="nav_bmi">BMI計算</button>
+    <button data-tool="calorie" data-i18n="nav_calorie">消費カロリー</button>
+  </nav>
+
+  <div>
+    <div class="panel">
+
+      <!-- ホーム -->
+      <div class="workspace active" id="ws-home">
+        <div class="home-content">
+          <h2 data-i18n="home_title">Reckonへようこそ</h2>
+          <p data-i18n="home_lead">使いたい計算ツールを選んでください。入力した内容は送信されず、この端末の中だけで計算されます。</p>
+          <div class="home-grid">
+            <button class="home-card" data-goto="age"><span class="home-card-tag" data-i18n="home_tag_date">DATE</span><h3 data-i18n="nav_age">年齢計算</h3><p data-i18n="home_desc_age">生年月日から今の年齢と、次の誕生日までの日数を出す</p></button>
+            <button class="home-card" data-goto="datediff"><span class="home-card-tag" data-i18n="home_tag_date">DATE</span><h3 data-i18n="nav_datediff">日付差分計算</h3><p data-i18n="home_desc_datediff">2つの日付の差、またはN日後・N日前の日付を出す</p></button>
+            <button class="home-card" data-goto="countdown"><span class="home-card-tag" data-i18n="home_tag_date">DATE</span><h3 data-i18n="nav_countdown">カウントダウン</h3><p data-i18n="home_desc_countdown">配信開始やイベントまでの残り時間を表示する</p></button>
+            <button class="home-card" data-goto="weekday"><span class="home-card-tag" data-i18n="home_tag_date">DATE</span><h3 data-i18n="nav_weekday">曜日計算</h3><p data-i18n="home_desc_weekday">指定した日付の曜日を調べる</p></button>
+            <button class="home-card" data-goto="timezone"><span class="home-card-tag" data-i18n="home_tag_date">DATE</span><h3 data-i18n="nav_timezone">時差計算</h3><p data-i18n="home_desc_timezone">2つの都市の現在時刻と時差を比較する</p></button>
+            <button class="home-card" data-goto="zodiac"><span class="home-card-tag" data-i18n="home_tag_date">DATE</span><h3 data-i18n="nav_zodiac">干支・十二支</h3><p data-i18n="home_desc_zodiac">生まれ年から十二支と干支を調べる</p></button>
+            <button class="home-card" data-goto="calc"><span class="home-card-tag" data-i18n="home_tag_math">MATH</span><h3 data-i18n="nav_calc">電卓</h3><p data-i18n="home_desc_calc">基本計算と関数電卓モード</p></button>
+            <button class="home-card" data-goto="splitbill"><span class="home-card-tag" data-i18n="home_tag_math">MATH</span><h3 data-i18n="nav_splitbill">割り勘計算</h3><p data-i18n="home_desc_splitbill">端数調整・幹事多めにも対応</p></button>
+            <button class="home-card" data-goto="percent"><span class="home-card-tag" data-i18n="home_tag_math">MATH</span><h3 data-i18n="nav_percent">パーセント計算</h3><p data-i18n="home_desc_percent">割引後の価格や増減率をまとめて計算</p></button>
+            <button class="home-card" data-goto="unitconvert"><span class="home-card-tag" data-i18n="home_tag_math">MATH</span><h3 data-i18n="nav_unitconvert">単位変換</h3><p data-i18n="home_desc_unitconvert">長さ・重さ・温度・面積・体積を変換</p></button>
+            <button class="home-card" data-goto="baseconvert"><span class="home-card-tag" data-i18n="home_tag_math">MATH</span><h3 data-i18n="nav_baseconvert">進数変換</h3><p data-i18n="home_desc_baseconvert">2進数・8進数・10進数・16進数・ASCII</p></button>
+            <button class="home-card" data-goto="quadratic"><span class="home-card-tag" data-i18n="home_tag_math">MATH</span><h3 data-i18n="nav_quadratic">二次方程式</h3><p data-i18n="home_desc_quadratic">ax²+bx+c=0 の解を求める</p></button>
+            <button class="home-card" data-goto="bmi"><span class="home-card-tag" data-i18n="home_tag_health">HEALTH</span><h3 data-i18n="nav_bmi">BMI計算</h3><p data-i18n="home_desc_bmi">身長・体重からBMIと適正体重を出す</p></button>
+            <button class="home-card" data-goto="calorie"><span class="home-card-tag" data-i18n="home_tag_health">HEALTH</span><h3 data-i18n="nav_calorie">消費カロリー</h3><p data-i18n="home_desc_calorie">運動の種類・時間から消費カロリーを出す</p></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 年齢計算 -->
+      <div class="workspace" id="ws-age">
+        <div class="tool-grid">
+          <div class="field">
+            <label data-i18n="age_birth_label">生年月日</label>
+            <input type="date" id="ageBirth">
+          </div>
+          <div class="field">
+            <label data-i18n="age_target_label">基準日</label>
+            <input type="date" id="ageTarget">
+          </div>
+        </div>
+        <div class="result-box" id="ageResult">
+          <div class="result-placeholder" data-i18n="result_placeholder">生年月日を入力してください</div>
+        </div>
+      </div>
+
+      <!-- 日付差分計算 -->
+      <div class="workspace" id="ws-datediff">
+        <div class="chip-row" id="datediffModeChips">
+          <span class="chip on" data-mode="diff" data-i18n="datediff_mode_diff">2つの日付の差</span>
+          <span class="chip" data-mode="add" data-i18n="datediff_mode_add">指定日数後/前</span>
+        </div>
+        <div class="tool-grid" id="datediffDiffFields">
+          <div class="field">
+            <label data-i18n="datediff_date1_label">日付1</label>
+            <input type="date" id="datediffDate1">
+          </div>
+          <div class="field">
+            <label data-i18n="datediff_date2_label">日付2</label>
+            <input type="date" id="datediffDate2">
+          </div>
+        </div>
+        <div class="tool-grid" id="datediffAddFields" style="display:none;">
+          <div class="field">
+            <label data-i18n="datediff_base_label">基準日</label>
+            <input type="date" id="datediffBase">
+          </div>
+          <div class="field">
+            <label data-i18n="datediff_days_label">日数（マイナスで前）</label>
+            <input type="number" id="datediffDays" value="30">
+          </div>
+        </div>
+        <div class="result-box" id="datediffResult">
+          <div class="result-placeholder" data-i18n="result_placeholder2">日付を入力してください</div>
+        </div>
+      </div>
+
+      <!-- カウントダウン -->
+      <div class="workspace" id="ws-countdown">
+        <div class="tool-grid">
+          <div class="field">
+            <label data-i18n="countdown_target_label">目標日時</label>
+            <input type="datetime-local" id="countdownTarget">
+          </div>
+          <div class="field">
+            <label data-i18n="countdown_title_label">タイトル（任意）</label>
+            <input type="text" id="countdownTitle" placeholder="配信開始まで">
+          </div>
+        </div>
+        <div class="result-box result-box-big" id="countdownResult">
+          <div class="result-placeholder" data-i18n="countdown_placeholder">目標日時を入力してください</div>
+        </div>
+      </div>
+
+      <!-- 曜日計算 -->
+      <div class="workspace" id="ws-weekday">
+        <div class="tool-grid">
+          <div class="field">
+            <label data-i18n="weekday_date_label">日付</label>
+            <input type="date" id="weekdayDate">
+          </div>
+        </div>
+        <div class="result-box" id="weekdayResult">
+          <div class="result-placeholder" data-i18n="result_placeholder2">日付を入力してください</div>
+        </div>
+      </div>
+
+      <!-- 時差計算 -->
+      <div class="workspace" id="ws-timezone">
+        <div class="tool-grid">
+          <div class="field">
+            <label data-i18n="timezone_a_label">都市A</label>
+            <select id="timezoneA"></select>
+          </div>
+          <div class="field">
+            <label data-i18n="timezone_b_label">都市B</label>
+            <select id="timezoneB"></select>
+          </div>
+        </div>
+        <div class="result-box" id="timezoneResult">
+          <div class="result-placeholder" data-i18n="result_placeholder3">都市を選んでください</div>
+        </div>
+      </div>
+
+      <!-- 干支・十二支 -->
+      <div class="workspace" id="ws-zodiac">
+        <div class="tool-grid">
+          <div class="field">
+            <label data-i18n="zodiac_year_label">生まれた年</label>
+            <input type="number" id="zodiacYear" min="1900" max="2100" placeholder="2000">
+          </div>
+        </div>
+        <div class="result-box" id="zodiacResult">
+          <div class="result-placeholder" data-i18n="zodiac_placeholder">年を入力してください</div>
+        </div>
+      </div>
+
+      <!-- 電卓 -->
+      <div class="workspace" id="ws-calc">
+        <div class="chip-row">
+          <span class="chip on" id="calcModeBasic" data-i18n="calc_mode_basic">標準</span>
+          <span class="chip" id="calcModeSci" data-i18n="calc_mode_sci">関数電卓</span>
+        </div>
+        <div class="calc-wrap">
+          <input type="text" id="calcDisplay" class="calc-display" readonly value="0">
+          <div class="calc-grid" id="calcGridSci" style="display:none;"></div>
+          <div class="calc-grid" id="calcGridBasic"></div>
+        </div>
+      </div>
+
+      <!-- 割り勘計算 -->
+      <div class="workspace" id="ws-splitbill">
+        <div class="tool-grid">
+          <div class="field">
+            <label data-i18n="splitbill_total_label">合計金額</label>
+            <input type="number" id="splitTotal" min="0" value="10000">
+          </div>
+          <div class="field">
+            <label data-i18n="splitbill_people_label">人数</label>
+            <input type="number" id="splitPeople" min="1" value="4">
+          </div>
+        </div>
+        <div class="field">
+          <label data-i18n="splitbill_round_label">端数の扱い</label>
+          <div class="chip-row" id="splitRoundChips">
+            <span class="chip on" data-r="up" data-i18n="splitbill_round_up">切り上げ</span>
+            <span class="chip" data-r="down" data-i18n="splitbill_round_down">切り捨て</span>
+            <span class="chip" data-r="nearest" data-i18n="splitbill_round_nearest">四捨五入</span>
+          </div>
+        </div>
+        <label class="checkbox-row">
+          <input type="checkbox" id="splitOrganizerMore">
+          <span data-i18n="splitbill_organizer_label">幹事は少なめに払う</span>
+        </label>
+        <div class="result-box" id="splitResult"></div>
+      </div>
+
+      <!-- パーセント計算 -->
+      <div class="workspace" id="ws-percent">
+        <div class="chip-row" id="percentModeChips">
+          <span class="chip on" data-m="ratio" data-i18n="percent_mode_ratio">AはBの何%</span>
+          <span class="chip" data-m="value" data-i18n="percent_mode_value">Aの何%はいくつ</span>
+          <span class="chip" data-m="discount" data-i18n="percent_mode_discount">割引後の価格</span>
+          <span class="chip" data-m="change" data-i18n="percent_mode_change">増減率</span>
+        </div>
+        <div class="tool-grid" id="percentFields"></div>
+        <div class="result-box" id="percentResult"></div>
+      </div>
+
+      <!-- 単位変換 -->
+      <div class="workspace" id="ws-unitconvert">
+        <div class="chip-row" id="unitCategoryChips">
+          <span class="chip on" data-c="length" data-i18n="unit_cat_length">長さ</span>
+          <span class="chip" data-c="weight" data-i18n="unit_cat_weight">重さ</span>
+          <span class="chip" data-c="temp" data-i18n="unit_cat_temp">温度</span>
+          <span class="chip" data-c="area" data-i18n="unit_cat_area">面積</span>
+          <span class="chip" data-c="volume" data-i18n="unit_cat_volume">体積</span>
+        </div>
+        <div class="tool-grid">
+          <div class="field">
+            <label data-i18n="unit_value_label">数値</label>
+            <input type="number" id="unitValue" value="1">
+          </div>
+          <div class="field">
+            <label data-i18n="unit_from_label">変換前</label>
+            <select id="unitFrom"></select>
+          </div>
+          <div class="field">
+            <label data-i18n="unit_to_label">変換後</label>
+            <select id="unitTo"></select>
+          </div>
+        </div>
+        <div class="result-box" id="unitResult"></div>
+      </div>
+
+      <!-- 進数変換 -->
+      <div class="workspace" id="ws-baseconvert">
+        <div class="tool-grid">
+          <div class="field">
+            <label data-i18n="base_value_label">数値</label>
+            <input type="text" id="baseValue" value="255">
+          </div>
+          <div class="field">
+            <label data-i18n="base_from_label">入力の基数</label>
+            <select id="baseFrom">
+              <option value="10">10進数</option>
+              <option value="2">2進数</option>
+              <option value="8">8進数</option>
+              <option value="16">16進数</option>
+            </select>
+          </div>
+        </div>
+        <div class="result-box" id="baseResult"></div>
+      </div>
+
+      <!-- 二次方程式 -->
+      <div class="workspace" id="ws-quadratic">
+        <p class="tool-note">ax² + bx + c = 0</p>
+        <div class="tool-grid tool-grid-3">
+          <div class="field"><label>a</label><input type="number" id="quadA" value="1"></div>
+          <div class="field"><label>b</label><input type="number" id="quadB" value="0"></div>
+          <div class="field"><label>c</label><input type="number" id="quadC" value="0"></div>
+        </div>
+        <div class="result-box" id="quadResult"></div>
+      </div>
+
+      <!-- BMI計算 -->
+      <div class="workspace" id="ws-bmi">
+        <div class="tool-grid">
+          <div class="field">
+            <label data-i18n="bmi_height_label">身長 (cm)</label>
+            <input type="number" id="bmiHeight" value="170">
+          </div>
+          <div class="field">
+            <label data-i18n="bmi_weight_label">体重 (kg)</label>
+            <input type="number" id="bmiWeight" value="60">
+          </div>
+        </div>
+        <div class="result-box" id="bmiResult"></div>
+      </div>
+
+      <!-- 消費カロリー -->
+      <div class="workspace" id="ws-calorie">
+        <div class="tool-grid">
+          <div class="field">
+            <label data-i18n="calorie_weight_label">体重 (kg)</label>
+            <input type="number" id="calorieWeight" value="60">
+          </div>
+          <div class="field">
+            <label data-i18n="calorie_activity_label">運動の種類</label>
+            <select id="calorieActivity"></select>
+          </div>
+          <div class="field">
+            <label data-i18n="calorie_duration_label">時間 (分)</label>
+            <input type="number" id="calorieDuration" value="30">
+          </div>
+        </div>
+        <div class="result-box" id="calorieResult"></div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div data-i18n="footer_text">すべての計算はこの端末内で行われます。入力内容はどこにも送信されません。</div>
+  <div class="footer-copyright">Copyright (C) 2026 daigorou-tools. All right reserved.</div>
+</footer>
+
+<script src="i18n.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

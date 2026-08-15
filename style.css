@@ -1,0 +1,398 @@
+/* ===================================================================
+   Reckon — 各種計算サイト
+   Safelight / Daigorou-Tools と同じダーク×シアンのトーンで統一
+=================================================================== */
+
+:root{
+  --dark:#0b0f13;
+  --dark-2:#0e1318;
+  --panel:#131920;
+  --panel-2:#171f27;
+  --raised:#1c242c;
+  --paper:#eef3f6;
+  --ink:#d7dee4;
+  --ink-dim:#b7c1c9;
+  --line:#26303a;
+  --line-soft:#1c242c;
+  --muted:#7c8894;
+  --accent:#29e0c4;
+  --accent-2:#12a894;
+  --accent-ink:#04241f;
+  --danger:#e05a3a;
+  --mono:"JetBrains Mono","SFMono-Regular",Consolas,monospace;
+  --sans:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(41,224,196,.06), transparent 60%),
+    var(--dark);
+  color:var(--ink);
+  font-family:var(--sans);
+  min-height:100vh;
+}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+
+/* ---------- ヘッダー ---------- */
+header{
+  padding:26px 32px;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg, var(--panel), var(--dark-2));
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px;
+}
+header .brand{display:flex;align-items:center;gap:12px;}
+header .brand .mark{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink-dim);
+  border:1px solid var(--line);
+  background:var(--panel-2);
+  padding:5px 10px 5px 8px;
+  border-radius:20px;
+}
+header .brand .mark::before{
+  content:"";
+  width:7px;height:7px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 6px 1px rgba(41,224,196,.9), 0 0 14px 3px rgba(41,224,196,.4);
+  animation:pulse 2.6s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;} 50%{opacity:.45;}}
+header h1{
+  font-size:21px;
+  margin:0;
+  font-weight:900;
+  letter-spacing:.02em;
+  color:var(--paper);
+}
+header .brand-sub{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--muted);
+  border-left:1px solid var(--line);
+  padding-left:12px;
+}
+header .header-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+header .back-link{
+  font-family:var(--mono);
+  font-size:11.5px;
+  color:var(--muted);
+  border:1px solid var(--line);
+  background:var(--panel-2);
+  padding:6px 11px;
+  border-radius:20px;
+  transition:border-color .15s, color .15s;
+  white-space:nowrap;
+}
+header .back-link:hover{border-color:var(--accent);color:var(--accent);}
+header p{margin:0;color:var(--muted);font-size:12px;font-family:var(--mono);letter-spacing:.02em;}
+header .lang-select{
+  font-family:var(--mono);
+  font-size:11px;
+  background:var(--panel-2);
+  color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:5px;
+  padding:6px 8px;
+  cursor:pointer;
+}
+header .lang-select:focus{outline:2px solid var(--accent);outline-offset:1px;}
+
+main{
+  max-width:1100px;
+  margin:0 auto;
+  padding:30px 32px 90px;
+  display:grid;
+  grid-template-columns:196px 1fr;
+  gap:24px;
+}
+@media (max-width:760px){ main{grid-template-columns:1fr;padding:20px 16px 60px;} }
+
+/* ---------- ツールナビ ---------- */
+nav.tools{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  padding:14px 14px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:6px;
+  position:sticky;
+  top:20px;
+  align-self:start;
+}
+nav.tools button{
+  text-align:left;
+  background:none;
+  border:none;
+  border-left:2px solid transparent;
+  padding:10px 10px 10px 14px;
+  margin:0 4px;
+  font-family:var(--sans);
+  font-size:13.5px;
+  font-weight:500;
+  color:var(--muted);
+  cursor:pointer;
+  border-radius:0 4px 4px 0;
+  transition:background .15s, color .15s, border-color .15s;
+}
+nav.tools button:hover{background:rgba(255,255,255,.03);color:var(--ink);}
+nav.tools button.active{
+  color:var(--paper);
+  font-weight:700;
+  border-left-color:var(--accent);
+  background:linear-gradient(90deg, rgba(41,224,196,.14), transparent);
+}
+nav.tools .nav-label{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  padding:14px 10px 4px;
+  margin-top:6px;
+  border-top:1px solid var(--line-soft);
+}
+nav.tools .nav-label:first-child{border-top:none;margin-top:0;}
+
+/* ---------- パネル ---------- */
+.panel{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:26px;
+}
+.workspace{display:none;}
+.workspace.active{display:block;}
+
+/* ---------- フォーム共通 ---------- */
+.tool-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+  gap:14px;
+  margin-bottom:18px;
+}
+.tool-grid-3{grid-template-columns:repeat(3, 1fr);}
+.tool-note{
+  font-family:var(--mono);
+  font-size:15px;
+  color:var(--ink-dim);
+  margin:0 0 16px;
+}
+.field{display:flex;flex-direction:column;gap:6px;}
+.field label{
+  font-size:11.5px;
+  color:var(--muted);
+  font-family:var(--mono);
+  letter-spacing:.03em;
+}
+.field input, .field select{
+  font-family:var(--sans);
+  font-size:15px;
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:var(--dark-2);
+  color:var(--ink);
+  width:100%;
+  color-scheme:dark;
+}
+.field input:focus, .field select:focus{outline:2px solid var(--accent);outline-offset:1px;}
+
+.checkbox-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:13.5px;
+  color:var(--ink-dim);
+  margin-bottom:18px;
+  cursor:pointer;
+}
+.checkbox-row input{accent-color:var(--accent);width:16px;height:16px;}
+
+.chip-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;}
+.chip{
+  border:1px solid var(--line);
+  background:var(--panel-2);
+  padding:8px 14px;
+  border-radius:20px;
+  font-size:12.5px;
+  font-family:var(--mono);
+  cursor:pointer;
+  color:var(--ink-dim);
+  transition:background .15s, color .15s, border-color .15s;
+}
+.chip:hover{border-color:var(--muted);}
+.chip.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700;}
+
+/* ---------- 結果表示 ---------- */
+.result-box{
+  background:var(--dark-2);
+  border:1px solid var(--line-soft);
+  border-radius:8px;
+  padding:22px;
+  min-height:60px;
+}
+.result-box-big{
+  padding:32px;
+  text-align:center;
+}
+.result-placeholder{
+  color:var(--muted);
+  font-size:13.5px;
+  text-align:center;
+  padding:10px 0;
+}
+.result-main{
+  font-size:32px;
+  font-weight:900;
+  color:var(--accent);
+  font-family:var(--mono);
+  margin-bottom:6px;
+}
+.result-main-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+.result-sub{
+  color:var(--ink-dim);
+  font-size:14px;
+  line-height:1.8;
+}
+.result-lines{display:flex;flex-direction:column;gap:8px;}
+.result-line{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  padding:8px 0;
+  border-bottom:1px solid var(--line-soft);
+  font-size:14px;
+}
+.result-line:last-child{border-bottom:none;}
+.result-line .k{color:var(--muted);font-family:var(--mono);font-size:12.5px;}
+.result-line .v{color:var(--paper);font-weight:700;font-family:var(--mono);}
+.countdown-grid{
+  display:flex;
+  justify-content:center;
+  gap:22px;
+  flex-wrap:wrap;
+}
+.countdown-unit{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.countdown-num{
+  font-family:var(--mono);
+  font-size:38px;
+  font-weight:900;
+  color:var(--accent);
+}
+.countdown-label{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--muted);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.countdown-title{
+  font-size:15px;
+  color:var(--ink-dim);
+  margin-bottom:16px;
+}
+.countdown-done{
+  font-size:20px;
+  font-weight:900;
+  color:var(--accent);
+}
+
+/* ---------- 電卓 ---------- */
+.calc-wrap{max-width:380px;}
+.calc-display{
+  width:100%;
+  font-family:var(--mono);
+  font-size:32px;
+  text-align:right;
+  padding:18px 16px;
+  background:var(--dark-2);
+  border:1px solid var(--line);
+  border-radius:8px;
+  color:var(--paper);
+  margin-bottom:12px;
+  overflow-x:auto;
+}
+.calc-grid{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:8px;
+  margin-bottom:8px;
+}
+.calc-btn{
+  font-family:var(--mono);
+  font-size:16px;
+  padding:14px 0;
+  border:1px solid var(--line);
+  background:var(--panel-2);
+  color:var(--ink);
+  border-radius:6px;
+  cursor:pointer;
+  transition:background .1s, border-color .1s;
+}
+.calc-btn:hover{border-color:var(--muted);}
+.calc-btn:active{background:var(--raised);}
+.calc-btn.op{color:var(--accent);}
+.calc-btn.eq{background:var(--accent);color:var(--accent-ink);font-weight:700;border-color:var(--accent);}
+.calc-btn.eq:hover{filter:brightness(1.08);}
+.calc-btn.wide{grid-column:span 2;}
+
+/* ---------- ホーム ---------- */
+.home-content{max-width:1000px;padding:10px 4px;}
+.home-content h2{color:var(--paper);font-size:26px;margin:0 0 10px;font-weight:900;text-align:center;}
+.home-content p{color:var(--ink-dim);font-size:14px;line-height:1.8;margin:0 0 14px;}
+.home-content > p{text-align:center;max-width:520px;margin:0 auto 32px;}
+.home-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:14px;}
+.home-card{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:6px;
+  text-align:left;
+  background:var(--panel-2);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:18px;
+  cursor:pointer;
+  font-family:inherit;
+  transition:border-color .15s, transform .15s, background .15s;
+}
+.home-card:hover{border-color:var(--accent);background:var(--raised);transform:translateY(-2px);}
+.home-card-tag{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.06em;
+  color:var(--accent);
+  background:rgba(41,224,196,.1);
+  border:1px solid rgba(41,224,196,.25);
+  padding:3px 7px;
+  border-radius:20px;
+}
+.home-card h3{font-size:16px;font-weight:700;color:var(--paper);margin:2px 0 0;}
+.home-card p{font-size:12px;line-height:1.55;color:var(--muted);margin:0;}
+
+/* ---------- フッター ---------- */
+footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:11.5px;
+  font-family:var(--mono);
+  letter-spacing:.02em;
+  padding:24px;
+  border-top:1px solid var(--line-soft);
+}
+.footer-copyright{margin-top:6px;opacity:.6;font-size:10.5px;}
