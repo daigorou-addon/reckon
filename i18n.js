@@ -112,6 +112,7 @@ ja: {
   activity_walking: "ウォーキング", activity_jogging: "ジョギング", activity_running: "ランニング",
   activity_cycling: "サイクリング", activity_swimming: "水泳", activity_yoga: "ヨガ",
   activity_strength: "筋力トレーニング", activity_dancing: "ダンス",
+  theme_toggle_title: "表示テーマを切り替え（ライト/ダーク）",
 },
 
 en: {
@@ -221,6 +222,7 @@ en: {
   activity_walking: "Walking", activity_jogging: "Jogging", activity_running: "Running",
   activity_cycling: "Cycling", activity_swimming: "Swimming", activity_yoga: "Yoga",
   activity_strength: "Strength training", activity_dancing: "Dancing",
+  theme_toggle_title: "Switch theme (light/dark)",
 },
 
 ko: {
@@ -330,6 +332,7 @@ ko: {
   activity_walking: "걷기", activity_jogging: "조깅", activity_running: "달리기",
   activity_cycling: "자전거", activity_swimming: "수영", activity_yoga: "요가",
   activity_strength: "근력 운동", activity_dancing: "댄스",
+  theme_toggle_title: "테마 전환(라이트/다크)",
 },
 
 "zh-CN": {
@@ -439,6 +442,7 @@ ko: {
   activity_walking: "步行", activity_jogging: "慢跑", activity_running: "跑步",
   activity_cycling: "骑行", activity_swimming: "游泳", activity_yoga: "瑜伽",
   activity_strength: "力量训练", activity_dancing: "跳舞",
+  theme_toggle_title: "切换主题（浅色/深色）",
 },
 
 "zh-TW": {
@@ -548,6 +552,7 @@ ko: {
   activity_walking: "健走", activity_jogging: "慢跑", activity_running: "跑步",
   activity_cycling: "騎自行車", activity_swimming: "游泳", activity_yoga: "瑜伽",
   activity_strength: "肌力訓練", activity_dancing: "跳舞",
+  theme_toggle_title: "切換主題（淺色/深色）",
 },
 
 es: {
@@ -657,6 +662,7 @@ es: {
   activity_walking: "Caminar", activity_jogging: "Trote", activity_running: "Correr",
   activity_cycling: "Ciclismo", activity_swimming: "Natacion", activity_yoga: "Yoga",
   activity_strength: "Entrenamiento de fuerza", activity_dancing: "Baile",
+  theme_toggle_title: "Cambiar tema (claro/oscuro)",
 },
 
 };
@@ -693,6 +699,10 @@ function applyI18n(lang){
     if(el.tagName === 'TITLE'){ document.title = val; }
     else { el.textContent = val; }
   });
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    const key = el.getAttribute('data-i18n-title');
+    el.title = t(key);
+  });
   const sel = document.getElementById('langSelect');
   if(sel) sel.value = currentLang;
   if(typeof window.reckonRecalcAll === 'function') window.reckonRecalcAll();
@@ -704,4 +714,26 @@ document.addEventListener('DOMContentLoaded', () => {
   if(sel){
     sel.addEventListener('change', () => applyI18n(sel.value));
   }
+});
+
+// ---- 表示テーマ(ライト/ダーク) ----
+function detectTheme(){
+  const saved = localStorage.getItem('reckon-theme');
+  if(saved === 'light' || saved === 'dark') return saved;
+  return 'dark'; // デフォルトはダーク
+}
+let currentTheme = detectTheme();
+function applyTheme(theme){
+  currentTheme = (theme === 'dark') ? 'dark' : 'light';
+  localStorage.setItem('reckon-theme', currentTheme);
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  const btn = document.getElementById('themeToggleBtn');
+  if(btn){
+    btn.textContent = currentTheme === 'dark' ? '☾' : '☀';
+  }
+}
+applyTheme(currentTheme);
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('themeToggleBtn');
+  if(btn) btn.addEventListener('click', () => applyTheme(currentTheme === 'dark' ? 'light' : 'dark'));
 });
